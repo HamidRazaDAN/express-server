@@ -11,7 +11,7 @@ MERN is the acronym name given to the set of technologies including Mongo DB, Ex
 
     The original author, TJ Holowaychuk, described it as a Sinatra-inspired server, meaning that it is relatively minimal with many features available as plugins. Express is the backend part of the MEAN stack, together with Mongo DB database and AngularJS frontend framework.
 
-* #### REACT JS <img src="https://png.pngtree.com/svg/20170719/react_1353128.png" height="30" width="30" align="left" style="margin:0px 10px 0px 5px;"  >
+* #### REACT JS <img src="https://cdn4.iconfinder.com/data/icons/logos-3/426/react_js-512.png" height="30" width="30" align="left" style="margin:0px 10px 0px 5px;" >
     React (also known as React.js or React JS) is a JavaScript library for building user interfaces. It is maintained by Facebook and a community of individual developers and companies.
 
     React can be used as a base in the development of single-page or mobile applications. Complex React applications usually require the use of additional libraries for state management, routing, and interaction with an API.
