@@ -1,0 +1,21 @@
+{
+  "name": "express-server",
+  "version": "1.0.0",
+  "description": "Printing a pattern",
+  "main": "index.js",
+  "scripts": {
+    "pattern:diamond": "nodemon extra/patterns/diamond.js",
+    "pattern:equilateral": "nodemon extra/patterns/equilateral.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HamidRazaST/express-server.git"
+  },
+  "author": "Mohammad Hamid Raza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HamidRazaST/express-server/issues"
+  },
+  "homepage": "https://github.com/HamidRazaST/express-server#readme"
+}
