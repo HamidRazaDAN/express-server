@@ -8,11 +8,11 @@ let permissions = {
 };
 
 function hasPermission(moduleName, role, permissionType) {
-  if (permissions[moduleName] && permissions[moduleName][permissionType].includes(role)) {
+  if ( permissions[moduleName] && ( permissions[moduleName][permissionType].includes(role) || permissions[moduleName]['all'].includes(role) ) ) {
     return true;
   } else {
     return false;
   }
 }
 
-console.log(hasPermission('getUsers', 'trainer', 'read'));
+console.log(hasPermission('getUsers', 'trainer', 'delete'));
