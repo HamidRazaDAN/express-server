@@ -1,18 +1,22 @@
-let permissions = {
+const HEAD_TRAINER = 'head-trainer';
+const TRAINER = 'trainer';
+const TRAINEE = 'trainee';
+
+const permissions = {
   'getUsers': {
-    all: ['head-trainer'],
-    read: ['trainee', 'trainer'],
-    write: ['trainer'],
+    all: [HEAD_TRAINER],
+    read: [TRAINEE, TRAINER],
+    write: [TRAINER],
     delete: []
   }
 };
 
-function hasPermission(moduleName, role, permissionType) {
+function hasPermission( moduleName, role, permissionType ) {
   if ( permissions[moduleName] && ( permissions[moduleName][permissionType].includes(role) || permissions[moduleName]['all'].includes(role) ) ) {
-    return true;
+    console.log(`${role} have permission to ${permissionType} for the module ${moduleName}`);
   } else {
-    return false;
+    console.log(`${role} do not have permission to ${permissionType} for the module ${moduleName}`);
   }
 }
 
-console.log(hasPermission('getUsers', 'trainer', 'delete'));
+hasPermission( 'getUsers', 'trainer', 'write' );
