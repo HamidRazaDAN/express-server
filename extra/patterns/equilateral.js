@@ -1,17 +1,15 @@
-function equilateral (n) {
-    console.log('Print a diamond with rows', n);
-    let pattern = '';
-    for(let i=1; i<=n; i++) {
-        for(let j=n; j>i; j--) {
-            pattern += ' ';
-        }
-        
-        for(let j=1; j<=i; j++) {
-            pattern += '* ';
-        }
-        pattern += '\n';
+export default function equilateral(n) {
+  console.log(`Print a equilateral with rows ${n}`);
+  let pattern = "";
+  for (let i = 1; i <= n; i++) {
+    for (let j = n; j > i; j--) {
+      pattern += " ";
     }
-    console.log(pattern);
-}
 
-equilateral(10);
+    for (let j = 1; j <= i; j++) {
+      pattern += "* ";
+    }
+    pattern += "\n";
+  }
+  console.log(pattern);
+}
