@@ -4,8 +4,11 @@
   "description": "Printing a pattern",
   "main": "index.js",
   "scripts": {
+    "nodemon": "nodemon ./dist",
     "dev": "babel-node extra --presets env",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run clean:dist && tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "clean:dist": "rm -rf dist/*"
   },
   "repository": {
     "type": "git",
@@ -19,6 +22,9 @@
   "homepage": "https://github.com/HamidRazaST/express-server#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0"
-  }
+    "babel-preset-env": "^1.7.0",
+    "tsc-watch": "^2.1.2",
+    "typescript": "^3.3.3333"
+  },
+  "dependencies": {}
 }
