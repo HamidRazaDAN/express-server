@@ -1,6 +1,7 @@
 import { IConfig } from "./config/IConfig";
 import * as express from 'express';
 import { notFoundRoute } from './libs';
+import { traineeRouter } from './controllers';
 
 export default class Server {
   private app: express.Express;
@@ -20,13 +21,9 @@ export default class Server {
   }
 
   setupRoutes() {
-    const { app } = this;
+    this.app.use('/trainee', traineeRouter);
 
-    app.get('/health-check', (req: express.Request, res: express.Response) => {
-      res.send('I am OK!!');
-    });
-
-    app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+    this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
       res.send(notFoundRoute());
     });
   }
