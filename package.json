@@ -26,5 +26,9 @@
     "tsc-watch": "^2.1.2",
     "typescript": "^3.3.3333"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/node": "^11.10.4",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4"
+  }
 }
