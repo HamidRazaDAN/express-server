@@ -1,2 +1,3 @@
 export { default as traineeRouter} from './routes';
-export { default as Controller } from './Controller';
+export { default as TraineeController } from './Controller';
+export { default as traineeValidation } from './validation';

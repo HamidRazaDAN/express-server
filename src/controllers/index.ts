@@ -1,1 +1,1 @@
-export { traineeRouter, Controller } from './trainee';
+export { traineeRouter, TraineeController, traineeValidation } from './trainee';
