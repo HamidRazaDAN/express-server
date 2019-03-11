@@ -45,7 +45,7 @@ export default (config) => (req: Request, res: Response, next: NextFunction) => 
         if(!regEx.test(validatedValue[0])) {
           return next({
             error: 'BAD_REQUEST',
-            message: `${key} should have only character and dot`,
+            message: `${key} should be string`,
             status: 400
           });
         }
