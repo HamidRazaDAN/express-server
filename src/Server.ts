@@ -1,7 +1,8 @@
 import { IConfig } from "./config/IConfig";
 import * as express from 'express';
-import { notFoundRoute } from './libs';
-import { traineeRouter } from './controllers';
+import  bodyParser = require( 'body-parser');
+import { notFoundRoute, errorHandler } from './libs';
+import router from './router';
 
 export default class Server {
   private app: express.Express;
@@ -11,34 +12,46 @@ export default class Server {
   }
 
   bootstrap() {
-    this.initBodyParser();
-    this.setupRoutes();
-    return this;
+    try {
+      this.initBodyParser();
+      this.setupRoutes();
+      return this;
+    } catch(err) {
+      console.log('error ', err);
+    }
   }
 
   initBodyParser() {
-
+    try {
+      this.app.use(bodyParser.json());
+    } catch(err) {
+      console.log('error ', err);
+    }
   }
 
   setupRoutes() {
-    this.app.use('/trainee', traineeRouter);
-
-    this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-      res.send(notFoundRoute());
-    });
+    try {
+      this.app.use('/', router);
+      this.app.use(notFoundRoute);
+      this.app.use(errorHandler);
+    } catch(err) {
+      console.log('error ', err);
+    }
   }
 
   run() {
-    const { port } = {...this.config};
-
-    this.app.listen(port, (err: Error) => {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log(`Server has started at ${port} port`);
-      }
-    });
-
-    return this;
+    try {
+      const { port } = {...this.config};
+      this.app.listen(port, (err: Error) => {
+        if(err) {
+          console.log(err);
+        } else {
+          console.log(`Server has started at port ${port}`);
+        }
+      });
+      return this;
+    } catch(err) {
+      console.log('error ', err);
+    }
   }
 }

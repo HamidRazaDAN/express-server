@@ -1,12 +1,15 @@
 import * as express from 'express';
-import Controller from './Controller';
+import validation from './validation';
+import TraineeController from './Controller';
+import { validationHandler } from '../../libs';
 
 const traineeRouter = express.Router();
-const controller = new Controller();
+const controller = new TraineeController();
 
-traineeRouter.get('/read', controller.read);
-traineeRouter.post('/create', controller.create);
-traineeRouter.put('/update', controller.update);
-traineeRouter.delete('/delete', controller.delete);
+traineeRouter
+  .get('/read/:id', validationHandler(validation.read) ,controller.read)
+  .post('/create', validationHandler(validation.create), controller.create)
+  .put('/update', validationHandler(validation.update), controller.update)
+  .delete('/delete/:id', validationHandler(validation.delete), controller.delete);
 
 export default traineeRouter;

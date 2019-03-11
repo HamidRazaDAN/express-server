@@ -1,8 +1,14 @@
-export default function errorHandler(error: string, message: string, status: number) {
-  return {
-    error: error,
-    message: message,
-    status: status,
-    timestamp: new Date
+import { Error, Request, Response, NextFunction }from 'express';
+
+export default (err: Error, req: Request, res: Response, next: NextFunction) => {
+  const { error, message, status } = err;
+  const errMsg = {
+    error: error || 'Undefined',
+    message: message || 'Error Ocurred',
+    status: status || 200,
+    timestamp: new Date()
   };
+
+  res.status(status).send(errMsg);
+  next();
 }
