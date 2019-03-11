@@ -32,27 +32,23 @@ export default class TraineeController {
   }
 
   public read(req: Request, res: Response, next: NextFunction) {
-    let flag: boolean = false;
-    let userData = {
-      id: '',
-      name: ''
-    };
+    let flag: boolean = true;
 
     data.every(value => {
       if(value.id === req.params.id) {
-        flag = true;
-        userData = {
+        const userData = {
           id: value.id,
           name: value.name
         }
+        res.status(200).send(successHandler('Successfully Read', 200, userData));
+
+        flag = false;
         return false;
       }
       return true;
     });
 
     if(flag) {
-      res.status(200).send(successHandler('Successfully Read', 200, userData));
-    } else {
       next({
         error: 'BAD_REQUEST',
         message: 'Id does not exist',
@@ -112,6 +108,39 @@ export default class TraineeController {
         error: 'BAD_REQUEST',
         message: 'Id does not exist',
         status: 404
+      });
+    }
+  }
+
+  public getList(req: Request, res: Response, next: NextFunction) {
+    let limit: number = data.length, skip: number = 0, msg: string, flag: boolean = true;
+
+    if(req.query.limit) {
+      limit = parseInt(req.query.limit, 10);
+    }
+
+    if(req.query.skip) {
+      skip = parseInt(req.query.skip, 10);
+    }
+
+    if(limit <= 0) {
+      msg = 'Limit should be greater than zero.';
+      flag = false;
+    }
+
+    if(skip < 0) {
+      msg = 'Skip can not be lesser than zero.';
+      flag = false;
+    }
+
+    if(flag) {
+      const userData = data.slice(skip, (limit + skip));
+      res.status(200).send(successHandler('Successfully Read', 200, userData));
+    } else {
+      next({
+        error: 'BAD_REQUEST',
+        message: msg,
+        status: 400
       });
     }
   }
