@@ -1,3 +1,4 @@
 export interface IConfig {
-  port: string;
+  port: string,
+  MONGO_URL: string
 }
