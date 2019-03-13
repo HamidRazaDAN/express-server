@@ -4,7 +4,7 @@ export {
   successHandler,
   validationHandler,
   authMiddleWare,
-  hasPermission
+  hasPermission,
 } from './routes';
 export { IPermission } from './interfaces';
 export { permissions, TRAINEE_MODULE, USER_MODULE } from './constants';

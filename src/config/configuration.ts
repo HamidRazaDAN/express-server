@@ -5,8 +5,8 @@ config();
 const envVars: NodeJS.ProcessEnv = process.env;
 
 const configuration: IConfig = Object.freeze({
+  MONGO_URL: envVars.MONGO_URL,
   port: envVars.PORT,
-  MONGO_URL: envVars.MONGO_URL
 });
 
 export default configuration;

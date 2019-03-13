@@ -4,10 +4,10 @@ export default class Database {
   public static open(mongoURL: string) {
     return new Promise((resolve, reject) => {
       mongoose.connect(mongoURL, { useNewUrlParser: true })
-      .then(result => {
+      .then((result) => {
         return resolve('Connected successfully to mongo');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
     });

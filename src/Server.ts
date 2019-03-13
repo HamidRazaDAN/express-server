@@ -1,7 +1,7 @@
-import { IConfig } from "./config/IConfig";
-import * as express from 'express';
 import  bodyParser = require( 'body-parser');
-import { notFoundRoute, errorHandler, Database } from './libs';
+import * as express from 'express';
+import { IConfig } from './config/IConfig';
+import { Database, errorHandler, notFoundRoute } from './libs';
 import router from './router';
 
 export default class Server {
@@ -11,42 +11,42 @@ export default class Server {
     this.app = express();
   }
 
-  bootstrap() {
+  public bootstrap() {
     try {
       this.initBodyParser();
       this.setupRoutes();
       return this;
-    } catch(err) {
+    } catch (err) {
       console.log('error ', err);
     }
   }
 
-  initBodyParser() {
+  public initBodyParser() {
     try {
       this.app.use(bodyParser.json());
-    } catch(err) {
+    } catch (err) {
       console.log('error ', err);
     }
   }
 
-  setupRoutes() {
+  public setupRoutes() {
     try {
       this.app.use('/', router);
       this.app.use(notFoundRoute);
       this.app.use(errorHandler);
-    } catch(err) {
+    } catch (err) {
       console.log('error ', err);
     }
   }
 
-  async run() {
+  public async run() {
     try {
       const { MONGO_URL, port } = {...this.config};
       const db = await Database.open(MONGO_URL);
 
-      if(db) {
+      if (db) {
         this.app.listen(port, (err: Error) => {
-          if(err) {
+          if (err) {
             console.log(err);
           } else {
             console.log(`Server has started at port ${port}`);
@@ -54,7 +54,7 @@ export default class Server {
         });
         return this;
       }
-    } catch(err) {
+    } catch (err) {
       console.log('error ', err);
     }
   }

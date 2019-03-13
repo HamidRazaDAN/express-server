@@ -3,8 +3,8 @@ interface IPermission {
     all: string[],
     read: string[],
     write: string[],
-    delete: string[]
-  }
+    delete: string[],
+  };
 }
 
 export { IPermission };

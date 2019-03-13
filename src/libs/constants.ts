@@ -9,17 +9,17 @@ const TRAINEE: string = 'trainee';
 const permissions: IPermission = {
   [TRAINEE_MODULE]: {
     all: [HEAD_TRAINER],
+    delete: [],
     read: [TRAINEE, TRAINER],
     write: [TRAINER],
-    delete: []
   },
 
   [USER_MODULE]: {
     all: [HEAD_TRAINER],
+    delete: [],
     read: [TRAINEE, TRAINER],
     write: [TRAINER],
-    delete: []
-  }
-}
+  },
+};
 
 export { permissions, TRAINEE_MODULE, USER_MODULE };

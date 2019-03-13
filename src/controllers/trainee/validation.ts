@@ -13,50 +13,50 @@ const validation = {
     },
     name: {
       in: ['body'],
+      regex: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
       required: true,
-      regex: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
-    }
+    },
   },
   delete: {
     id: {
       in: ['params'],
       required: true,
-    }
+    },
   },
   get: {
-    skip: {
-      in: ['query'],
-      required: false,
-      number: true,
-      default: 10,
-    },
     limit: {
-      in: ['query'],
-      required: false,
-      number: true,
       default: 20,
-    }
-  },
-  update: {
-    id: {
-      in: ['body'],
-      required: true,
-      string: true
+      in: ['query'],
+      number: true,
+      required: false,
     },
-    dataToUpdate: {
-      in: ['body'],
-      required: true,
-      isObject: true,
-      custom: function(dataToUpdate) {},
-    }
+    skip: {
+      default: 10,
+      in: ['query'],
+      number: true,
+      required: false,
+    },
   },
   read: {
     id: {
       in: ['params'],
       required: true,
       string: true,
-    }
-  }
-}
+    },
+  },
+  update: {
+    dataToUpdate: {
+      in: ['body'],
+      isObject: true,
+      required: true,
+      // custom(dataToUpdate) {},
+    },
+    id: {
+      in: ['body'],
+      required: true,
+      string: true,
+    },
+  },
+};
 
 export default validation;

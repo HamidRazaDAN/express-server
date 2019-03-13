@@ -1,4 +1,4 @@
-import { permissions } from "../constants";
+import { permissions } from '../constants';
 
 export default function hasPermission(moduleName: string, role: string, permissionType: string) {
   const ALL: string = 'all';
