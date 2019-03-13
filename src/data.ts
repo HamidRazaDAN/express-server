@@ -1,16 +1,16 @@
 const data = [
   {
     id: '1',
-    name: 'Mohammad'
+    name: 'Mohammad',
   },
   {
     id: '2',
-    name: 'Hamid'
+    name: 'Hamid',
   },
   {
     id: '3',
-    name: 'Raza'
-  }
+    name: 'Raza',
+  },
 ];
 
 export default data;
