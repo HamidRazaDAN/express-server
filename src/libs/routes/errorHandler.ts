@@ -1,4 +1,4 @@
-import { Error, Request, Response, NextFunction }from 'express';
+import { Error, Request, Response, NextFunction } from 'express';
 
 export default (err: Error, req: Request, res: Response, next: NextFunction) => {
   const { error, message, status } = err;

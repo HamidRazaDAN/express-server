@@ -1,7 +1,7 @@
 import { IConfig } from "./config/IConfig";
 import * as express from 'express';
 import  bodyParser = require( 'body-parser');
-import { notFoundRoute, errorHandler } from './libs';
+import { notFoundRoute, errorHandler, Database } from './libs';
 import router from './router';
 
 export default class Server {
@@ -39,17 +39,21 @@ export default class Server {
     }
   }
 
-  run() {
+  async run() {
     try {
-      const { port } = {...this.config};
-      this.app.listen(port, (err: Error) => {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log(`Server has started at port ${port}`);
-        }
-      });
-      return this;
+      const { MONGO_URL, port } = {...this.config};
+      const db = await Database.open(MONGO_URL);
+
+      if(db) {
+        this.app.listen(port, (err: Error) => {
+          if(err) {
+            console.log(err);
+          } else {
+            console.log(`Server has started at port ${port}`);
+          }
+        });
+        return this;
+      }
     } catch(err) {
       console.log('error ', err);
     }
