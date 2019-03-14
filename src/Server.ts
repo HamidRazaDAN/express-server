@@ -17,7 +17,7 @@ export default class Server {
       this.setupRoutes();
       return this;
     } catch (err) {
-      console.log('error ', err);
+      console.log('Error: ', err);
     }
   }
 
@@ -25,7 +25,7 @@ export default class Server {
     try {
       this.app.use(bodyParser.json());
     } catch (err) {
-      console.log('error ', err);
+      console.log('Error: ', err);
     }
   }
 
@@ -35,7 +35,7 @@ export default class Server {
       this.app.use(notFoundRoute);
       this.app.use(errorHandler);
     } catch (err) {
-      console.log('error ', err);
+      console.log('Error: ', err);
     }
   }
 
@@ -47,7 +47,7 @@ export default class Server {
       if (db) {
         this.app.listen(port, (err: Error) => {
           if (err) {
-            console.log(err);
+            console.log('Error: ', err);
           } else {
             console.log(`Server has started at port ${port}`);
           }
@@ -55,7 +55,7 @@ export default class Server {
         return this;
       }
     } catch (err) {
-      console.log('error ', err);
+      console.log('Error: ', err);
     }
   }
 }

@@ -1,4 +1,4 @@
-const traineeValidation = {
+const userValidation = {
   create: {
     id: {
       in: ['body'],
@@ -59,4 +59,4 @@ const traineeValidation = {
   },
 };
 
-export default traineeValidation;
+export default userValidation;
