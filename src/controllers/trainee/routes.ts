@@ -1,17 +1,43 @@
 import * as express from 'express';
 import { authMiddleWare, TRAINEE_MODULE, validationHandler } from '../../libs';
-import TraineeController from './Controller';
-import validation from './validation';
+import traineeController from './Controller';
+import traineeValidation from './validation';
 
 const traineeRouter = express.Router();
-const controller = new TraineeController();
+const READ: string = 'read';
+const WRITE: string = 'write';
+const DELETE: string = 'delete';
 
 traineeRouter
-  .get('/read', validationHandler(validation.get), authMiddleWare(TRAINEE_MODULE, 'read'), controller.getList)
-  .get('/read/:id', validationHandler(validation.read), authMiddleWare(TRAINEE_MODULE, 'read'), controller.read)
-  .post('/create', validationHandler(validation.create), authMiddleWare(TRAINEE_MODULE, 'write'), controller.create)
-  .put('/update', validationHandler(validation.update), authMiddleWare(TRAINEE_MODULE, 'write'), controller.update)
-  // tslint:disable-next-line:max-line-length
-  .delete('/delete/:id', validationHandler(validation.delete), authMiddleWare(TRAINEE_MODULE, 'delete'), controller.delete);
+  .get(
+    '/read',
+    validationHandler(traineeValidation.getList),
+    authMiddleWare(TRAINEE_MODULE, READ),
+    traineeController.getList,
+  )
+  .get(
+    '/read/:id',
+    validationHandler(traineeValidation.get),
+    authMiddleWare(TRAINEE_MODULE, READ),
+    traineeController.read,
+  )
+  .post(
+    '/create',
+    validationHandler(traineeValidation.create),
+    authMiddleWare(TRAINEE_MODULE, WRITE),
+    traineeController.create,
+  )
+  .put(
+    '/update',
+    validationHandler(traineeValidation.update),
+    authMiddleWare(TRAINEE_MODULE, WRITE),
+    traineeController.update,
+  )
+  .delete(
+    '/delete/:id',
+    validationHandler(traineeValidation.delete),
+    authMiddleWare(TRAINEE_MODULE, DELETE),
+    traineeController.delete,
+  );
 
 export default traineeRouter;

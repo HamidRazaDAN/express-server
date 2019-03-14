@@ -1,150 +1,83 @@
 import { NextFunction, Request, Response } from 'express';
-import data from '../../data';
 import { successHandler } from '../../libs';
+import { traineeRepository } from '../../repositories';
 
-export default class TraineeController {
-  public create(req: Request, res: Response, next: NextFunction) {
-    const { id, name } = req.body;
-    let flag: boolean = true;
-
-    data.every((value) => {
-      if (value.id === id) {
-        flag = false;
-        return false;
-      }
-      return true;
-    });
-
-    if (flag) {
-      const userData = {
-        id,
-        name,
-      };
-      data.push(userData);
-      res.status(200).send(successHandler('Successfully Created', 200, userData));
-    } else {
+class TraineeController {
+  public async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id, name } = req.body;
+      const data = { id, name };
+      const result = await traineeRepository.create(data);
+      res.status(200).send(successHandler('successfully read data.', 200, result));
+    } catch {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id already exist',
+        message: 'Id already exists.',
         status: 404,
       });
     }
   }
 
-  public read(req: Request, res: Response, next: NextFunction) {
-    let flag: boolean = true;
-
-    data.every((value) => {
-      if (value.id === req.params.id) {
-        const userData = {
-          id: value.id,
-          name: value.name,
-        };
-        res.status(200).send(successHandler('Successfully Read', 200, userData));
-
-        flag = false;
-        return false;
-      }
-      return true;
-    });
-
-    if (flag) {
+  public async read(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const query = { id };
+      const result = await traineeRepository.findOne(query);
+      res.status(200).send(successHandler('successfully read data.', 200, result));
+    } catch {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id does not exist',
+        message: 'Id does not exist.',
         status: 404,
       });
     }
   }
 
-  public update(req: Request, res: Response, next: NextFunction) {
-    const { id, dataToUpdate: { name } } = req.body;
-    let flag: boolean = false;
-
-    data.every((value) => {
-      if (value.id === id) {
-        value.name = name;
-        flag = true;
-        return false;
-      }
-      return true;
-    });
-
-    if (flag) {
-      const userData = {
-        id,
-        name,
-      };
-      res.status(200).send(successHandler('Successfully Updated', 200, userData));
-    } else {
+  public async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id, dataToUpdate } = req.body;
+      const query = { id };
+      await traineeRepository.findOne(query);
+      await traineeRepository.updateOne(query, dataToUpdate);
+      res.status(200).send(successHandler('successfully updated data.', 200, dataToUpdate));
+    } catch {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id does not exist',
+        message: 'Id does not exist.',
         status: 404,
       });
     }
   }
 
-  public delete(req: Request, res: Response, next: NextFunction) {
-    const { id } = req.params;
-    let flag: boolean = true;
-
-    data.every((value, index) => {
-      if (value.id === id) {
-        const userData = {
-          id,
-          name: value.name,
-        };
-        data.splice(index, 1);
-        res.status(200).send(successHandler('Successfully Deleted', 200, userData));
-        flag = false;
-        return false;
-      }
-      return true;
-    });
-
-    if (flag) {
+  public async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const query = { id };
+      await traineeRepository.findOne(query);
+      await traineeRepository.deleteOne(query);
+      res.status(200).send(successHandler('successfully deleted data.', 200, id));
+    } catch {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id does not exist',
+        message: 'Id already exists.',
         status: 404,
       });
     }
   }
 
-  public getList(req: Request, res: Response, next: NextFunction) {
-    let limit: number = data.length;
-    let skip: number = 0;
-    let msg: string;
-    let flag: boolean = true;
-
-    if (req.query.limit) {
-      limit = parseInt(req.query.limit, 10);
-    }
-
-    if (req.query.skip) {
-      skip = parseInt(req.query.skip, 10);
-    }
-
-    if (limit <= 0) {
-      msg = 'Limit should be greater than zero.';
-      flag = false;
-    }
-
-    if (skip < 0) {
-      msg = 'Skip can not be lesser than zero.';
-      flag = false;
-    }
-
-    if (flag) {
-      const userData = data.slice(skip, (limit + skip));
-      res.status(200).send(successHandler('Successfully Read', 200, userData));
-    } else {
+  public async getList(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { skip, limit } = req.query;
+      const result = await traineeRepository.find(skip, limit);
+      res.status(200).send(successHandler('successfully read data.', 200, result));
+    } catch {
       next({
         error: 'BAD_REQUEST',
-        message: msg,
-        status: 400,
+        message: 'Id already exists.',
+        status: 404,
       });
     }
   }
 }
+
+export default new TraineeController();

@@ -4,10 +4,10 @@ export default (config) => (req: Request, res: Response, next: NextFunction) => 
   const keys = Object.keys(config);
   keys.forEach((key) => {
     const items = config[key];
-    const value = items.in.map((item) => {
+    const value = items.in.map((item: string) => {
       return req[item][key];
     });
-    const validatedValue = value.filter((item) => item);
+    const validatedValue = value.filter((item: any) => item);
 
     if (items && items.required) {
       if (value.length !== validatedValue.length) {
@@ -64,7 +64,9 @@ export default (config) => (req: Request, res: Response, next: NextFunction) => 
 
     if (items && items.default) {
       if (validatedValue[0] === undefined) {
-        validatedValue[0] = items.default;
+        items.in.map((item: string) => {
+          req[item][key] = items.default;
+        });
       }
     }
 

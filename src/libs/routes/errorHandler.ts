@@ -5,7 +5,7 @@ export default (err: Error, req: Request, res: Response, next: NextFunction) => 
   const errMsg = {
     error: error || 'Undefined',
     message: message || 'Error Ocurred',
-    status: status || 200,
+    status: status || 500,
     timestamp: new Date(),
   };
 

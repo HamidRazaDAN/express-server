@@ -9,3 +9,4 @@ export {
 export { IPermission } from './interfaces';
 export { permissions, TRAINEE_MODULE, USER_MODULE } from './constants';
 export { default as Database } from './Database';
+export { default as seedData } from './seedData';
