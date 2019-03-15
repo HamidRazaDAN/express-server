@@ -1,12 +1,31 @@
-import { traineeRepository } from '../repositories';
+import { userRepository } from '../repositories';
 
 export default async () => {
-  const data = {
-    id: '1',
-    name: 'Hamid',
-  };
-  const result = await traineeRepository.findOne(data);
-  if (!result) {
-    await traineeRepository.create(data);
+  const countDocs = await userRepository.countDocuments();
+  if (countDocs === 0) {
+    const user1 = {
+      email: 'vinay@successive.tech',
+      name: 'vinay',
+      password: '123456',
+      role: 'head-trainer',
+    };
+
+    const user2 = {
+      email: 'sunil@successive.tech',
+      name: 'sunil',
+      password: '123456',
+      role: 'trainer',
+    };
+
+    const user3 = {
+      email: 'hamid@successive.tech',
+      name: 'hamid',
+      password: '123456',
+      role: 'trainee',
+    };
+
+    await userRepository.create(user1);
+    await userRepository.create(user2);
+    await userRepository.create(user3);
   }
 };

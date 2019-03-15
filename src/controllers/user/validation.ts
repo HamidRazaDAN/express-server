@@ -1,7 +1,8 @@
 const userValidation = {
   create: {
-    id: {
+    email: {
       in: ['body'],
+      regex: /^([A-Za-z0-9 \-\.])+\@(successive.tech)/,
       required: true,
       string: true,
     },
@@ -10,6 +11,18 @@ const userValidation = {
       in: ['body'],
       regex: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
       required: true,
+    },
+
+    password: {
+      in: ['body'],
+      required: true,
+      string: true,
+    },
+
+    role: {
+      in: ['body'],
+      required: true,
+      string: true,
     },
   },
 
@@ -44,6 +57,21 @@ const userValidation = {
     },
   },
 
+  login: {
+    email: {
+      in: ['body'],
+      regex: /^([A-Za-z0-9 \-\.])+\@(successive.tech)/,
+      required: true,
+      string: true,
+    },
+
+    password: {
+      in: ['body'],
+      required: true,
+      string: true,
+    },
+  },
+
   update: {
     dataToUpdate: {
       in: ['body'],
@@ -51,8 +79,9 @@ const userValidation = {
       required: true,
     },
 
-    id: {
+    email: {
       in: ['body'],
+      regex: /^([A-Za-z0-9 \-\.])+\@(successive.tech)/,
       required: true,
       string: true,
     },

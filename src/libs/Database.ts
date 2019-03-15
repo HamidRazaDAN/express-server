@@ -6,6 +6,7 @@ export default class Database {
     return new Promise((resolve, reject) => {
       mongoose.connect(mongoURL, { useCreateIndex: true, useNewUrlParser: true })
       .then(() => {
+        console.log('Connected Successfully to MongoDB');
         seedData();
         return resolve('Connected successfully to mongo');
       })

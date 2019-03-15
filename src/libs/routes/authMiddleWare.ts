@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { config } from '../../config';
+import { userRepository } from '../../repositories';
 import hasPermission from './permission';
 
 export default (moduleName: string, permissionType: string) => (req: Request, res: Response, next: NextFunction) => {
@@ -7,7 +9,8 @@ export default (moduleName: string, permissionType: string) => (req: Request, re
   let decode;
 
   try {
-    decode = jwt.verify(token, 'qwertyuiopasdfghjklzxcvbnm123456');
+    const { PRIVATE_KEY } = config;
+    decode = jwt.verify(token, PRIVATE_KEY);
   } catch {
     return next({
       error: 'FORBIDDEN',
@@ -16,7 +19,18 @@ export default (moduleName: string, permissionType: string) => (req: Request, re
     });
   }
 
-  const { role } = decode;
+  const { email, role } = decode;
+
+  try {
+    const query = { email };
+    userRepository.findOne(query);
+  } catch {
+    next({
+      error: 'Access Denied',
+      message: 'User does not exist',
+      status: '403',
+    });
+  }
 
   if (!hasPermission(moduleName, role, permissionType)) {
     return next({
@@ -25,6 +39,8 @@ export default (moduleName: string, permissionType: string) => (req: Request, re
       status: 403,
     });
   }
+
+  req.body.data = decode;
 
   next();
 };

@@ -8,7 +8,7 @@ class TraineeController {
       const { id, name } = req.body;
       const data = { id, name };
       const result = await traineeRepository.create(data);
-      res.status(200).send(successHandler('successfully read data.', 200, result));
+      res.status(200).send(successHandler('successfully created data.', 200, result));
     } catch {
       next({
         error: 'BAD_REQUEST',

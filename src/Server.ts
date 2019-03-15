@@ -41,15 +41,15 @@ export default class Server {
 
   public async run() {
     try {
-      const { MONGO_URL, port } = {...this.config};
+      const { MONGO_URL, PORT } = {...this.config};
       const db = await Database.open(MONGO_URL);
 
       if (db) {
-        this.app.listen(port, (err: Error) => {
+        this.app.listen(PORT, (err: Error) => {
           if (err) {
             console.log('Error: ', err);
           } else {
-            console.log(`Server has started at port ${port}`);
+            console.log(`Server has started at port ${PORT}`);
           }
         });
         return this;

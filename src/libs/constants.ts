@@ -5,6 +5,9 @@ const USER_MODULE: string = 'userModule';
 const HEAD_TRAINER: string = 'head-trainer';
 const TRAINER: string = 'trainer';
 const TRAINEE: string = 'trainee';
+const READ: string = 'read';
+const WRITE: string = 'write';
+const DELETE: string = 'delete';
 
 const permissions: IPermission = {
   [TRAINEE_MODULE]: {
@@ -22,4 +25,4 @@ const permissions: IPermission = {
   },
 };
 
-export { permissions, TRAINEE_MODULE, USER_MODULE };
+export { permissions, TRAINEE_MODULE, USER_MODULE, READ, WRITE, DELETE };
