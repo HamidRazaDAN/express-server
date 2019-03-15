@@ -1,14 +1,21 @@
 import * as express from 'express';
-import { authMiddleWare, USER_MODULE, validationHandler } from '../../libs';
+import { authMiddleWare, DELETE, READ, USER_MODULE, validationHandler, WRITE } from '../../libs';
 import userController from './Controller';
 import userValidation from './validation';
 
 const userRouter = express.Router();
-const READ: string = 'read';
-const WRITE: string = 'write';
-const DELETE: string = 'delete';
 
 userRouter
+  .post(
+    '/login',
+    validationHandler(userValidation.login),
+    userController.login,
+  )
+  .get(
+    '/getDetail',
+    authMiddleWare(USER_MODULE, READ),
+    userController.getDetail,
+  )
   .get(
     '/read',
     validationHandler(userValidation.getList),

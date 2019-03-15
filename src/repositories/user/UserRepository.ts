@@ -1,6 +1,10 @@
 import UserModel from './UserModel';
 
 class UserRepository {
+  public async countDocuments() {
+    return await UserModel.countDocuments();
+  }
+
   public async create(data) {
     return await UserModel.create(data);
   }
@@ -10,11 +14,15 @@ class UserRepository {
   }
 
   public async findOne(query) {
-    const result = await UserModel.findOne(query);
+    const result = await UserModel.findOne(query).lean();
     if (!result) {
       throw new Error();
     }
     return result;
+  }
+
+  public async findById(query) {
+    return await UserModel.findById(query);
   }
 
   public async updateOne(query, data) {
