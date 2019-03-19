@@ -17,31 +17,31 @@ userRouter
     userController.getDetail,
   )
   .get(
-    '/read',
+    '/',
     validationHandler(userValidation.getList),
     authMiddleWare(USER_MODULE, READ),
     userController.getList,
   )
   .get(
-    '/read/:id',
+    '/:id',
     validationHandler(userValidation.get),
     authMiddleWare(USER_MODULE, READ),
     userController.read,
   )
   .post(
-    '/create',
+    '/',
     validationHandler(userValidation.create),
     authMiddleWare(USER_MODULE, WRITE),
     userController.create,
   )
   .put(
-    '/update',
+    '/',
     validationHandler(userValidation.update),
     authMiddleWare(USER_MODULE, WRITE),
     userController.update,
   )
   .delete(
-    '/delete/:id',
+    '/:id',
     validationHandler(userValidation.delete),
     authMiddleWare(USER_MODULE, DELETE),
     userController.delete,

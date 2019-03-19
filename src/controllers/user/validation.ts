@@ -79,9 +79,8 @@ const userValidation = {
       required: true,
     },
 
-    email: {
+    id: {
       in: ['body'],
-      regex: /^([A-Za-z0-9 \-\.])+\@(successive.tech)/,
       required: true,
       string: true,
     },

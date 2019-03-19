@@ -41,7 +41,7 @@ export default class Server {
 
   public async run() {
     try {
-      const { MONGO_URL, PORT } = {...this.config};
+      const { MONGO_URL, PORT } = { ...this.config };
       const db = await Database.open(MONGO_URL);
 
       if (db) {
