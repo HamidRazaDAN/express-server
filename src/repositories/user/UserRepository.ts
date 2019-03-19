@@ -1,37 +1,38 @@
-import UserModel from './UserModel';
+import { VersionableRepository } from '../versionable';
+import userModel from './userModel';
 
-class UserRepository {
+class UserRepository extends VersionableRepository {
+  constructor(model) {
+    super(model);
+  }
+
   public async countDocuments() {
-    return await UserModel.countDocuments();
+    return await super.countDocuments();
   }
 
   public async create(data) {
-    return await UserModel.create(data);
+    return await super.create(data);
   }
 
-  public async find(skip: number, limit: number) {
-    return await UserModel.find().skip(skip).limit(limit);
+  public async find(query) {
+    return await super.find(query);
   }
 
-  public async findOne(query) {
-    const result = await UserModel.findOne(query).lean();
-    if (!result) {
-      throw new Error();
-    }
-    return result;
+  public async findOne(originalId) {
+    return await super.findOne(originalId);
   }
 
-  public async findById(query) {
-    return await UserModel.findById(query);
+  public async update(originalId, data) {
+    return await super.update(originalId, data);
   }
 
-  public async updateOne(query, data) {
-    return await UserModel.updateOne(query, data);
+  public async remove(originalId) {
+    return await super.remove(originalId);
   }
 
-  public async deleteOne(query) {
-    return await UserModel.deleteOne(query);
+  public async findByQuery(query) {
+    return await super.findByQuery(query);
   }
 }
 
-export default new UserRepository();
+export default new UserRepository(userModel);

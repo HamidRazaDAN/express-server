@@ -1,23 +1,28 @@
-import { Schema } from 'mongoose';
+import { VersionableSchema } from '../versionable';
 
-const UserSchema = new Schema({
-  email: {
-    required: true,
-    type: String,
-    unique: true,
-  },
-  name: {
-    required: true,
-    type: String,
-  },
-  password: {
-    required: true,
-    type: String,
-  },
-  role: {
-    required: true,
-    type: String,
-  },
-});
+class UserSchema extends VersionableSchema {
+  // constructor(options: any) {
+  //   const baseSchema = {
+  //     _id: String,
+  //     email: String,
+  //     name: String,
+  //     password: String,
+  //     role: String,
+  //   };
+
+  //   super(baseSchema, options);
+  // }
+  constructor() {
+    const baseSchema = {
+      _id: String,
+      email: String,
+      name: String,
+      password: String,
+      role: String,
+    };
+
+    super(baseSchema);
+  }
+}
 
 export default UserSchema;

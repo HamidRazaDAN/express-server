@@ -1,7 +1,7 @@
 import { IPermission } from './interfaces';
 
-const TRAINEE_MODULE: string = 'traineeModule';
-const USER_MODULE: string = 'userModule';
+const TRAINEE_MODULE: string = 'trainee';
+const USER_MODULE: string = 'user';
 const HEAD_TRAINER: string = 'head-trainer';
 const TRAINER: string = 'trainer';
 const TRAINEE: string = 'trainee';

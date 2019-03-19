@@ -5,21 +5,21 @@ export default async () => {
   if (countDocs === 0) {
     const user1 = {
       email: 'vinay@successive.tech',
-      name: 'vinay',
+      name: 'Vinay',
       password: '123456',
       role: 'head-trainer',
     };
 
     const user2 = {
       email: 'sunil@successive.tech',
-      name: 'sunil',
+      name: 'Sunil',
       password: '123456',
       role: 'trainer',
     };
 
     const user3 = {
       email: 'hamid@successive.tech',
-      name: 'hamid',
+      name: 'Hamid',
       password: '123456',
       role: 'trainee',
     };

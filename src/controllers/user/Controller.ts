@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { sign, verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import { config } from '../../config';
 import { successHandler } from '../../libs';
 import { userRepository } from '../../repositories';
@@ -11,10 +11,10 @@ class UserController {
       const data = { email, name, password, role };
       const result = await userRepository.create(data);
       res.status(200).send(successHandler('Successfully created data.', 200, result));
-    } catch {
+    } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: 'email already exists.',
+        message: err,
         status: 404,
       });
     }
@@ -23,8 +23,7 @@ class UserController {
   public async read(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const query = { id };
-      const result = await userRepository.findById(query);
+      const result = await userRepository.findOne(id);
       res.status(200).send(successHandler('Successfully read data.', 200, result));
     } catch {
       next({
@@ -37,15 +36,13 @@ class UserController {
 
   public async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, dataToUpdate } = req.body;
-      const query = { email };
-      await userRepository.findOne(query);
-      await userRepository.updateOne(query, dataToUpdate);
-      res.status(200).send(successHandler('Successfully updated data.', 200, dataToUpdate));
-    } catch {
+      const { id, dataToUpdate } = req.body;
+      const result = await userRepository.update(id, dataToUpdate);
+      res.status(200).send(successHandler('Successfully updated data.', 200, result));
+    } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id does not exist.',
+        message: err.message,
         status: 404,
       });
     }
@@ -54,14 +51,12 @@ class UserController {
   public async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const query = { id };
-      await userRepository.findById(query);
-      await userRepository.deleteOne(query);
+      await userRepository.remove(id);
       res.status(200).send(successHandler('Successfully deleted data.', 200, id));
-    } catch {
+    } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id already exists.',
+        message: err.message,
         status: 404,
       });
     }
@@ -70,7 +65,8 @@ class UserController {
   public async getList(req: Request, res: Response, next: NextFunction) {
     try {
       const { skip, limit } = req.query;
-      const result = await userRepository.find(skip, limit);
+      const query = { skip, limit };
+      const result = await userRepository.find(query);
       res.status(200).send(successHandler('Successfully read data.', 200, result));
     } catch {
       next({
@@ -85,7 +81,7 @@ class UserController {
     try {
       const { email, password } = req.body;
       const query = { email, password };
-      const result = await userRepository.findOne(query);
+      const result = await userRepository.findByQuery(query);
       const payload = {
         email: result.email,
         name: result.name,

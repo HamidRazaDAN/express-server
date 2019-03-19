@@ -23,7 +23,7 @@ export default (moduleName: string, permissionType: string) => (req: Request, re
 
   try {
     const query = { email };
-    userRepository.findOne(query);
+    userRepository.findByQuery(query);
   } catch {
     next({
       error: 'Access Denied',
@@ -35,7 +35,7 @@ export default (moduleName: string, permissionType: string) => (req: Request, re
   if (!hasPermission(moduleName, role, permissionType)) {
     return next({
       error: 'Access Denied',
-      message: `${role} do not have permission to ${permissionType} for the module ${moduleName}`,
+      message: `${role} do not have permission to ${permissionType} for the ${moduleName} module`,
       status: 403,
     });
   }
