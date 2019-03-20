@@ -1,5 +1,6 @@
 export interface IConfig {
-  PORT: string;
   MONGO_URL: string;
+  PASSWORD: string;
+  PORT: string;
   PRIVATE_KEY: string;
 }

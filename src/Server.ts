@@ -1,10 +1,10 @@
-import  bodyParser = require( 'body-parser');
+import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import { IConfig } from './config/IConfig';
 import { Database, errorHandler, notFoundRoute } from './libs';
 import router from './router';
 
-export default class Server {
+class Server {
   private app: express.Express;
 
   constructor(private config: IConfig) {
@@ -59,3 +59,5 @@ export default class Server {
     }
   }
 }
+
+export default Server;
