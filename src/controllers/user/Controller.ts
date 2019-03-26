@@ -1,3 +1,4 @@
+import { compare } from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { config } from '../../config';
@@ -10,11 +11,11 @@ class UserController {
       const { email, name, password, role } = req.body;
       const data = { email, name, password, role };
       const result = await userRepository.create(data);
-      res.status(200).send(successHandler('Successfully created data.', 200, result));
+      res.status(200).send(successHandler('Successfully Created.', 200, result));
     } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: err,
+        message: err.message,
         status: 404,
       });
     }
@@ -24,11 +25,11 @@ class UserController {
     try {
       const { id } = req.params;
       const result = await userRepository.findOne(id);
-      res.status(200).send(successHandler('Successfully read data.', 200, result));
-    } catch {
+      res.status(200).send(successHandler('Successfully Read.', 200, result));
+    } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id does not exist.',
+        message: err.message,
         status: 404,
       });
     }
@@ -38,7 +39,7 @@ class UserController {
     try {
       const { id, dataToUpdate } = req.body;
       const result = await userRepository.update(id, dataToUpdate);
-      res.status(200).send(successHandler('Successfully updated data.', 200, result));
+      res.status(200).send(successHandler('Successfully Updated.', 200, result));
     } catch (err) {
       next({
         error: 'BAD_REQUEST',
@@ -52,7 +53,7 @@ class UserController {
     try {
       const { id } = req.params;
       await userRepository.remove(id);
-      res.status(200).send(successHandler('Successfully deleted data.', 200, id));
+      res.status(200).send(successHandler('Successfully Deleted.', 200, id));
     } catch (err) {
       next({
         error: 'BAD_REQUEST',
@@ -67,11 +68,11 @@ class UserController {
       const { skip, limit } = req.query;
       const query = { skip, limit };
       const result = await userRepository.find(query);
-      res.status(200).send(successHandler('Successfully read data.', 200, result));
-    } catch {
+      res.status(200).send(successHandler('Successfully Read.', 200, result));
+    } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: 'Id already exists.',
+        message: err.message,
         status: 404,
       });
     }
@@ -80,20 +81,24 @@ class UserController {
   public async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-      const query = { email, password };
-      const result = await userRepository.findByQuery(query);
+      const result = await userRepository.checkEmail(email);
+      const hash = result.password;
+      const match = await compare(password, hash);
+      if (!match) {
+        throw new Error('Password Incorrect.');
+      }
       const payload = {
         email: result.email,
         name: result.name,
         role: result.role,
       };
       const { PRIVATE_KEY } = config;
-      const token = sign(payload, PRIVATE_KEY);
+      const token = sign(payload, PRIVATE_KEY, { expiresIn: '0.25h' });
       res.header('Authorization', token).send(token);
-    } catch {
+    } catch (err) {
       next({
         error: 'BAD_REQUEST',
-        message: 'login credential is invalid.',
+        message: err.message,
         status: 404,
       });
     }
@@ -103,10 +108,10 @@ class UserController {
     try {
       const { data } = req.body;
       res.status(200).send(successHandler('Successfully Read.', 200, data));
-    } catch {
+    } catch (err) {
       next({
         error: 'FORBIDDEN',
-        message: 'Authentication Failed',
+        message: err.message,
         status: 403,
       });
     }

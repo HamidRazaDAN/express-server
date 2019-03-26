@@ -1,10 +1,10 @@
-import * as mongoose from 'mongoose';
+import { connect, disconnect } from 'mongoose';
 import seedData from './seedData';
 
 export default class Database {
   public static async open(mongoURL: string) {
     return new Promise((resolve, reject) => {
-      mongoose.connect(mongoURL, { useCreateIndex: true, useNewUrlParser: true })
+      connect(mongoURL, { useCreateIndex: true, useNewUrlParser: true })
       .then(() => {
         console.log('Connected Successfully to MongoDB');
         seedData();
@@ -17,6 +17,6 @@ export default class Database {
   }
 
   public static close() {
-    mongoose.disconnect();
+    disconnect();
   }
 }

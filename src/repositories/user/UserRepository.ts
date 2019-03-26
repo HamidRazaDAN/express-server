@@ -18,20 +18,20 @@ class UserRepository extends VersionableRepository {
     return await super.find(query);
   }
 
-  public async findOne(originalId) {
+  public async findOne(originalId: string) {
     return await super.findOne(originalId);
   }
 
-  public async update(originalId, data) {
+  public async update(originalId: string, data) {
     return await super.update(originalId, data);
   }
 
-  public async remove(originalId) {
+  public async remove(originalId: string) {
     return await super.remove(originalId);
   }
 
-  public async findByQuery(query) {
-    return await super.findByQuery(query);
+  public async checkEmail(email: string) {
+    return await super.checkEmail(email);
   }
 }
 

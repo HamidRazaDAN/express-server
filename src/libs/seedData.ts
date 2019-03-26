@@ -1,26 +1,29 @@
+import { hash } from 'bcrypt';
+import { config } from '../config';
 import { userRepository } from '../repositories';
 
 export default async () => {
   const countDocs = await userRepository.countDocuments();
   if (countDocs === 0) {
+    const saltRound = 10;
     const user1 = {
       email: 'vinay@successive.tech',
       name: 'Vinay',
-      password: '123456',
+      password: await hash(config.PASSWORD, saltRound),
       role: 'head-trainer',
     };
 
     const user2 = {
       email: 'sunil@successive.tech',
       name: 'Sunil',
-      password: '123456',
+      password: await hash(config.PASSWORD, saltRound),
       role: 'trainer',
     };
 
     const user3 = {
       email: 'hamid@successive.tech',
       name: 'Hamid',
-      password: '123456',
+      password: await hash(config.PASSWORD, saltRound),
       role: 'trainee',
     };
 

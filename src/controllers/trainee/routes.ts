@@ -1,12 +1,9 @@
-import * as express from 'express';
-import { authMiddleWare, TRAINEE_MODULE, validationHandler } from '../../libs';
+import { Router } from 'express';
+import { authMiddleWare, DELETE, READ, TRAINEE_MODULE, validationHandler, WRITE } from '../../libs';
 import traineeController from './Controller';
 import traineeValidation from './validation';
 
-const traineeRouter = express.Router();
-const READ: string = 'read';
-const WRITE: string = 'write';
-const DELETE: string = 'delete';
+const traineeRouter = Router();
 
 traineeRouter
   .get(

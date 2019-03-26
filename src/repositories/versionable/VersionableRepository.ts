@@ -18,28 +18,45 @@ class VersionableRepository {
       _id: id,
       originalId: id,
     });
-    return await modelModified.save();
+    const result = await modelModified.save();
+
+    if (!result) {
+      throw new Error('Creation Error.');
+    }
+    return result;
   }
 
   public async find(query) {
     const { limit, skip } = query;
-    return await this.model.find({ deletedAt: undefined }, undefined, { limit, skip });
+    const result = await this.model.find({ deletedAt: undefined }, undefined, { limit, skip });
+    if (!result) {
+      throw new Error('Error Ocurred.');
+    }
+    return result;
   }
 
   public async findOne(originalId) {
-    const result = await this.model.findOne(originalId);
+    const result = await this.model.findOne({originalId, deletedAt: undefined});
     if (!result) {
       throw new Error('Id does not exist.');
     }
     return result;
   }
 
-  public async findByQuery(query) {
-    return await this.model.findOne(query);
+  public async checkEmail(email) {
+    const result = await this.model.findOne({ email, deletedAt: undefined });
+    if (!result) {
+      throw new Error('Email Incorrect.');
+    }
+    return result;
   }
 
-  public async updateOne(query, data) {
-    return await this.model.updateOne(query, data);
+  public async updateOne(originalId, data) {
+    const result = await this.model.updateOne({originalId, deletedAt: undefined}, data);
+    if (!result) {
+      throw new Error('Updation Error.');
+    }
+    return result;
   }
 
   public async update(originalId, data) {
@@ -52,7 +69,12 @@ class VersionableRepository {
     Object.assign(newDoc, data);
 
     await this.updateOne(originalId, prevDoc);
-    return await this.model.create(newDoc);
+    const result = await this.model.create(newDoc);
+    if (!result) {
+      throw new Error('Updation Error.');
+    }
+    return result;
+
   }
 
   public async remove(originalId) {

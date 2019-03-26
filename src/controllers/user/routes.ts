@@ -1,9 +1,9 @@
-import * as express from 'express';
+import { Router } from 'express';
 import { authMiddleWare, DELETE, READ, USER_MODULE, validationHandler, WRITE } from '../../libs';
 import userController from './Controller';
 import userValidation from './validation';
 
-const userRouter = express.Router();
+const userRouter = Router();
 
 userRouter
   .post(
