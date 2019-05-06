@@ -6,11 +6,23 @@
   "scripts": {
     "nodemon": "nodemon ./dist",
     "dev": "babel-node extra --presets env",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run clean:dist && tsc-watch --project . --onSuccess \"npm run nodemon\"",
     "clean:dist": "rm -rf dist/*",
     "lint": "./node_modules/tslint/bin/tslint --fix -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
-    "lint:fix": "yarn lint -- --fix"
+    "lint:fix": "yarn lint -- --fix",
+    "test": "jest --detectOpenHandles",
+    "jest": "jest --watchAll"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "verbose": true,
+    "collectCoverage": true,
+    "testPathIgnorePatterns": [
+      "/dist",
+      "/node_modules",
+      "__test__/tested"
+    ]
   },
   "husky": {
     "hooks": {
@@ -29,15 +41,21 @@
   },
   "homepage": "https://github.com/HamidRazaST/express-server#readme",
   "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/jest": "^24.0.11",
+    "@types/mongoose": "^5.3.24",
+    "@types/node": "^11.11.7",
+    "@types/supertest": "^2.0.7",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "jest": "^24.5.0",
+    "mongodb-memory-server": "^4.2.1",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.0",
     "tsc-watch": "^2.1.2",
     "typescript": "^3.3.3333"
   },
   "dependencies": {
-    "@types/body-parser": "^1.17.0",
-    "@types/mongoose": "^5.3.21",
-    "@types/node": "^11.10.4",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",

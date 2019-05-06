@@ -1,11 +1,15 @@
-export interface EmailType {
-  traineeEmail: string,
-  reviewerEmail: string
+interface IEmail {
+  reviewerEmail: string;
+  traineeEmail: string;
 }
 
-export interface UserType {
-  all: string[],
-  read: string[],
-  write: string[],
-  delete: string[]
+interface IPermission {
+  [user: string]: {
+    all: string[];
+    delete: string[];
+    read: string[];
+    write: string[];
+  };
 }
+
+export { IEmail, IPermission };

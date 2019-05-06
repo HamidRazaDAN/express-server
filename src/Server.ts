@@ -5,7 +5,7 @@ import { Database, errorHandler, notFoundRoute } from './libs';
 import router from './router';
 
 class Server {
-  private app: express.Express;
+  public app: express.Express;
 
   constructor(private config: IConfig) {
     this.app = express();

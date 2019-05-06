@@ -1,6 +1,4 @@
-import { IVersionableModel } from '../versionable';
-
-interface IUserModel extends IVersionableModel {
+interface IUserModel {
   email: string;
   name: string;
   password: string;

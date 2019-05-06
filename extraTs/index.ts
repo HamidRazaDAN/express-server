@@ -1,25 +1,8 @@
-import { EmailType } from './interfaces';
-import { diamond, equilateral } from "./patterns";
-import { hasPermission, validateUsers } from "./utils";
+import { users } from './constants';
+import { diamond, equilateral } from './patterns';
+import { hasPermission, validateUsers } from './utils';
 
-let users: EmailType[] = [
-  {
-    traineeEmail: "trainee1@successive.tech",
-    reviewerEmail: "reviewer1@successive.tech"
-  },
-
-  {
-    traineeEmail: "trainee1@successive.tech",
-    reviewerEmail: "reviewer1@successive.tech"
-  },
-
-  {
-    traineeEmail: "trainee1@successive.tec",
-    reviewerEmail: "reviewer1@successive.tech"
-  }
-];
-
-diamond(5);
-equilateral(5);
-hasPermission("getUsers", "trainer", "write");
+console.log(diamond(5));
+console.log(equilateral(5));
+console.log(hasPermission('getUsers', 'trainer', 'write'));
 validateUsers(users);

@@ -1,11 +1,11 @@
-import { EmailType } from './../interfaces';
-import { validateEmail } from "./helpers";
+import { IEmail } from './../interfaces';
+import { validateEmail } from './helpers';
 
-export default function validateUsers(users: EmailType[]) {
+export default function validateUsers(users: IEmail[]) {
   const validUsers: string[] = [];
   const invalidUsers: string[] = [];
 
-  users.forEach(function(user: EmailType, index: number) {
+  users.forEach((user: IEmail, index: number) => {
     const { traineeEmail, reviewerEmail } = user;
     if (validateEmail(traineeEmail) && validateEmail(reviewerEmail)) {
       validUsers.push(`User${index}`);
@@ -18,11 +18,11 @@ export default function validateUsers(users: EmailType[]) {
     `${validUsers.length} valid and ${invalidUsers.length} invalid users`
   );
 
-  if (validUsers.length != 0) {
+  if (validUsers.length !== 0) {
     console.log(`Valid Users are ${validUsers}`);
   }
 
-  if (invalidUsers.length != 0) {
+  if (invalidUsers.length !== 0) {
     console.log(`Invalid Users are ${invalidUsers}`);
   }
 }
